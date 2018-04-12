@@ -45,7 +45,7 @@ const isSubscriptionValid = (subscription) => {
 }
 
 module.exports = (subscription_file) => {
-  if (subscription_file.indexOf('.') > -1) {
+  if (subscription_file.indexOf('.') === 0) {
     subscription_file = path.join(__dirname, '../', subscription_file)
   }
   if (!fs.existsSync(subscription_file)) {

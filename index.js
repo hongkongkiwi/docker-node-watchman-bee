@@ -9,8 +9,12 @@ const config = require('./config'),
   _ = require('lodash'),
   queue = require(libs('queue')),
   logger = require(libs('logger')),
-  fileHash = require(libs('hash_file')),
-  subscriptions = require(libs('subscriptions'))(config.subscription_file)
+  fileHash = require(libs('hash_file'))
+
+  console.log(config.subscription_file)
+
+const subscriptions = require(libs('subscriptions'))(config.subscription_file)
+
 
 // Create a new watchman client
 const client = new watchman.Client()
