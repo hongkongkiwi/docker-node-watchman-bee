@@ -1,0 +1,12 @@
+.env
+Dockerfile
+buildtest.sh
+config
+data
+test
+.DS_Store
+node_modules
+
+*/temp*
+*/*/temp*
+temp?
