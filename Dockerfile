@@ -16,13 +16,13 @@ ENV WATCHMAN_REPO 'https://github.com/facebook/watchman.git'
 
 VOLUME ["/data", "/config"]
 
-COPY . /app
 WORKDIR /app
 
 RUN apk update \
  && apk add --no-cache \
   git build-base automake autoconf libtool openssl-dev \
-  linux-headers ca-certificates tzdata curl \
+  linux-headers ca-certificates tzdata curl pcre-dev \
+  file \
   libc6-compat \
   nano \
   tini \
@@ -33,16 +33,25 @@ RUN apk update \
  && git clone "$WATCHMAN_REPO" /tmp/watchman-src \
  && cd /tmp/watchman-src \
  && git checkout -q "v${WATCHMAN_VERSION}"
- # && ./autogen.sh \
- # && ./configure --enable-statedir=/tmp --without-python --with-buildinfo="Built in Alpine Dockerfile" \
- # && make \
- # && make install \
+
+RUN cd /tmp/watchman-src \
+ && ./autogen.sh \
+ && ./configure --enable-statedir=/tmp \
+      --without-python --with-pcre="/usr/bin/pcre-config" \
+      --with-buildinfo="Built in Alpine Dockerfile" \
+ && make \
+ && make install
  # clean up dependencies
- # && apk del --purge \
- #  git build-base automake autoconf libtool openssl-dev \
- #  linux-headers ca-certificates tzdata curl \
- # && rm -rf /var/cache/apk/ \
- # && rm -r /tmp/watchman-src
+
+COPY . /app
+
+RUN npm install && \
+ apk del --purge \
+ git build-base automake autoconf \
+ linux-headers ca-certificates \
+ tzdata curl file \
+&& rm -rf /var/cache/apk/ \
+&& rm -r /tmp/watchman-src
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
-CMD [ "/bin/bash" ]
+CMD [ "npm", "start" ]

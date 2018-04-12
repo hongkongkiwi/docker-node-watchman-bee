@@ -1,0 +1,24 @@
+{
+  "optional": [],
+  "required": [
+    "cmd-list-capabilities",
+    "cmd-clock",
+    "cmd-subscribe",
+    "cmd-watch-project",
+    "field-content.sha1hex",
+    "field-ctime_ms",
+    "field-mtime_ms",
+    "field-exists",
+    "field-type",
+    "term-not",
+    "term-true",
+    "term-false",
+    "term-allof",
+    "term-suffix",
+    "term-name",
+    "term-size",
+    "term-match",
+    "term-exists",
+    "relative_root"
+  ]
+}

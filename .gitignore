@@ -4,6 +4,7 @@ subscriptions.json
 data
 config
 .env
+test
 ## End Custom Ignores ##
 
 # Docker project generated files to ignore
