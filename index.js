@@ -2,19 +2,17 @@
 const config = require('./config'),
   fs = require('fs'),
   path = require('path'),
+  _ = require('lodash'),
   libs = (name) => ( path.join(__dirname, '/libs/', name) ),
   //appRoot = require('app-root-path').toString(),
   watchman = require('fb-watchman'),
   //bee = require('bee'),
-  _ = require('lodash'),
+  touchSubscriptionFile = require(libs('touch_existing_files')),
   queue = require(libs('queue')),
   logger = require(libs('logger')),
   fileHash = require(libs('hash_file'))
 
-  console.log(config.subscription_file)
-
 const subscriptions = require(libs('subscriptions'))(config.subscription_file)
-
 
 // Create a new watchman client
 const client = new watchman.Client()
@@ -95,4 +93,10 @@ client.capabilityCheck(capabilities, function(err, resp) {
 
   // Go through each subscription and subscribe as necessary
   _.each(subscriptions, subscribe)
+
+  // Loop through all directories and touch all files in the watch directories, this will send them to the queue
+  if (_.has(process.env, 'SEND_EXISTING_FILES_ON_BOOT') && process.env.SEND_EXISTING_FILES_ON_BOOT === 'true') {
+    logger.debug('SEND_EXISTING_FILES_ON_BOOT is true, sending every existing file to the queue')
+    _.each(subscriptions, touchSubscriptionFile)
+  }
 })

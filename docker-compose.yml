@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  watchman-dev:
+    image: hongkongkiwi/node-watchman-bee
+    restart: always
+    volumes:
+      - type: bind
+        source: ./data/watch
+        target: /data/watch
+      - type: bind
+        source: ./config/subscriptions.json
+        target: /config/subscriptions.json
+    links:
+      - redis-queue-testing
+    networks:
+    - watchman-testing
+  redis-queue-testing:
+    image: library/redis:latest
+    restart: always
+    ports:
+      - 6379
+    networks:
+      - watchman-testing
+
+networks:
+  watchman-testing:
+    external: false

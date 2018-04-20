@@ -1,11 +1,13 @@
 FROM node:9-alpine
 LABEL maintainer "Andy Savage"
 
-ENV NPM_CONFIG_LOGLEVEL info
+ENV NPM_CONFIG_LOGLEVEL error
 ENV TZ 'Asia/Hong_Kong'
 ENV NODE_ENV 'development'
 ENV WATCHMAN_VERSION '4.9.0'
 ENV WATCHMAN_REPO 'https://github.com/facebook/watchman.git'
+
+ENV SEND_EXISTING_FILES_ON_BOOT 'true'
 
 # RUN install_packages libssl-dev pkg-config libtool curl ca-certificates build-essential autoconf python-dev libpython-dev autotools-dev automake && \
 #     curl -LO https://github.com/facebook/watchman/archive/v${WATCHMAN_VERSION}.tar.gz && \

@@ -13,6 +13,9 @@
     "bee-queue": "^1.2.2",
     "dotenv": "^5.0.1",
     "fb-watchman": "^2.0.0",
-    "lodash": "^4.17.5"
+    "lodash": "^4.17.5",
+    "node-touch": "0.0.3",
+    "recursive-readdir": "^2.2.2",
+    "touch": "^3.1.0"
   }
 }
